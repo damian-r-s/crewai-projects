@@ -133,3 +133,6 @@ with open('venue_details.json') as f:
    data = json.load(f)
 
 pprint(data)
+
+from IPython.display import Markdown
+Markdown("marketing_report.md")
