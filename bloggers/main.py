@@ -1,16 +1,12 @@
-# Warning control
 import warnings
 warnings.filterwarnings('ignore')
 
 from crewai import Agent, Task, Crew
 import os
 
-# Environment config
 os.environ["OPENAI_API_KEY"] = "Your OpenAI API Key"
 os.environ["OPENAI_MODEL_NAME"] = "gpt-4o-mini"
 
-
-# 🧭 Strategy / Research Agent
 planner = Agent(
     role="Research & Content Strategist",
     goal="Develop a structured and data-informed content strategy around {topic}",
@@ -24,8 +20,6 @@ planner = Agent(
     verbose=True
 )
 
-
-# ✍️ Writing Agent
 writer = Agent(
     role="Editorial Content Creator",
     goal="Produce a clear, engaging, and well-reasoned article about {topic}",
@@ -39,8 +33,6 @@ writer = Agent(
     verbose=True
 )
 
-
-# 🧾 Editorial Review Agent
 editor = Agent(
     role="Editorial Quality Reviewer",
     goal="Ensure the article is polished, coherent, and aligned with editorial standards",
@@ -53,8 +45,6 @@ editor = Agent(
     verbose=True
 )
 
-
-# 📌 Task: Strategy
 plan = Task(
     description=(
         "Analyze the topic {topic} and build a structured content direction:\n"
@@ -70,8 +60,6 @@ plan = Task(
     agent=planner,
 )
 
-
-# 📌 Task: Writing
 write = Task(
     description=(
         "Using the provided strategy, write a complete article on {topic}:\n"
@@ -88,8 +76,6 @@ write = Task(
     agent=writer,
 )
 
-
-# 📌 Task: Editing
 edit = Task(
     description=(
         "Review the generated article and improve it by:\n"
@@ -105,8 +91,6 @@ edit = Task(
     agent=editor
 )
 
-
-# 🚀 Crew execution
 crew = Crew(
     agents=[planner, writer, editor],
     tasks=[plan, write, edit],
@@ -115,7 +99,5 @@ crew = Crew(
 
 result = crew.kickoff(inputs={"topic": "Artificial Intelligence"})
 
-
-# Output (works in notebook)
 from IPython.display import Markdown
 Markdown(result)
